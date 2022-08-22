@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ category_name|capitalize }}
+{% endblock %}
+
+{% block body %}
+	<div id="post_list">
+		<h1 class="text-center border-bottom pb-3">
+			{{ category_name|capitalize }}
+		</h1>
+
+		{% if posts is empty %}
+			<div class="text-center fw-bold">
+				Tu jeszcze nic nie ma
+			</div>
+		{% else %}
+			<div class="row g-2 border p-2 mt-4">
+				{% for post in posts %}
+					<div class="col-12 col-md-6 my-2">
+						<div class="bg-light col-12 d-flex border">
+							<a class="col-11 p-3 fw-bold text-center d-block" href="{{path("post_show", {id: post.id})}}" role="button">
+								{{ post.title }}
+							</a>
+
+							{% if app.user and app.user.id == post.user.id %}
+								<a class="border-start col-1 d-block position-relative" href="{{ path( 'post_edit', { id: post.id } ) }}">
+									<img src="{{ asset('images/settings.png') }}"/>
+								</a>
+							{% endif %}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

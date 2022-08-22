@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Log in!
+{% endblock %}
+
+{% block body %}
+  <form method="post">
+    <div class="w-50 mx-auto mt-5 p-3 border">
+      {% if error %}
+        <div class="alert alert-danger">
+          {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+      {% endif %}
+
+      {% if app.user %}
+        <div class="mb-3">
+          You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+      {% endif %}
+
+      <fieldset class="mb-3">
+        <legend class="fw-bold text-center fs-3 col-form-label required">
+          Logowanie
+        </legend>
+
+        <div class="mb-2 border p-2">
+          <label for="inputEmail" class="fw-bold">Adres email</label>
+          <input type="email"
+            value="{{ last_username }}"
+            name="email"
+            id="inputEmail"
+            class="form-control"
+            autocomplete="email"
+            placeholder="Wprowadź adres email"
+            required
+            autofocus />
+        </div>
+
+        <div class="mb-2 border p-2">
+          <label for="inputPassword" class="fw-bold">Hasło</label>
+          <input type="password"
+            name="password"
+            id="inputPassword"
+            class="form-control"
+            autocomplete="current-password"
+            placeholder="Wprowadź hasło"
+            required />
+        </div>
+
+        <input type="hidden"
+          name="_csrf_token"
+          value="{{ csrf_token('authenticate') }}" />
+
+        <button class="btn-lg btn-primary w-100 fw-bold" type="submit">
+          Zaloguj się
+        </button>
+      </fieldset>
+    </div>
+  </form>
+{% endblock %}
