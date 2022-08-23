@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Post;
+use App\Entity\Topic;
 use App\Form\CommentFormType;
 use App\Form\PostFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,31 +20,32 @@ use Symfony\Component\Security\Core\Security;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/create", name="post_create")
+     * @Route("/create/{topic_id}", name="post_create")
      */
     public function create(Request $request, EntityManagerInterface $em, Security $security)
     {
-        $post = new Post();
+        $topicRepository = $em->getRepository(Topic::class);
+        $topic = $topicRepository->find($request->get('topic_id'));
 
+        $post = new Post();
         $form = $this->createForm(PostFormType::class, $post, [
-            'label' => "Dodaj temat",
+            'label' => "Tworzenie posta",
             'label_attr' => [
                 'class' => "fw-bold text-center fs-3",
             ],
         ]);
 
-        $this->addButtonToForm($form, "Dodaj temat");
-
+        $this->addButtonToForm($form, "Dodaj posta");
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setDate(new \DateTime());
             $post->setUser($security->getUser());
+            $post->setTopic($topic);
             $em->persist($post);
             $em->flush();
-
             $this->addFlash('success', 'Post został utworzony');
-            return $this->redirectToRoute('post_create');
+            return $this->redirectToRoute('topic_show', ['id' => $topic->getId()]);
         }
 
         return $this->render('post/form.html.twig', [
@@ -103,6 +104,19 @@ class PostController extends AbstractController
     }
 
     /**
+     * @Route("/my_list/", name="post_my_list")
+     */
+    public function listMyPosts(Request $request, EntityManagerInterface $em, Security $security)
+    {
+        $repository = $em->getRepository(Post::class);
+        $posts = $repository->findBy(['user' => $security->getUser()]);
+
+        return $this->render('post/myPosts.html.twig', [
+            'posts' => $posts,
+        ]);
+    }
+
+    /**
      * @Route("/show/{id}", name="post_show")
      */
     // public function show(Request $request, EntityManagerInterface $em)
@@ -124,7 +138,6 @@ class PostController extends AbstractController
 
     private function addButtonToForm($form, string $label)
     {
-
         $form->add('submit', SubmitType::class, [
             'label' => $label,
             'attr' => [
