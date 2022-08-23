@@ -4,16 +4,20 @@
 
 {% block body %}
 <div id = "homepage_home">
-    <h1 class = "text-center border-bottom pb-3">Strona główna</h1>
-    
-    <div class = "box row g-2 border p-2 mt-4">
-        {% for category in categories %}
-            <div class = "col-12 col-md-6 my-2">
-                <a class = "border p-3 fw-bold text-center bg-light d-block" href="{{path("post_list", {category_id: category.id})}}" role="button">
-                    {{ category.name|capitalize  }}
-                </a>
-            </div>
-        {% endfor %}
+    <h1 class = "fs-5">Strona główna</h1>
+    <div class = "mt-2 bg-light"> 
+        <div class = "banner py-3 ps-2 text-white"> Wybierz temat </div>
+
+        <div class = "">
+            {% for topic in topics %}
+                <div class = "item p-3 pt-0 mt-2"> 
+                    <a class = "d-block" href="{{path("topic_show", {id: topic.id})}}" role="button">
+                        {{ topic.title|capitalize  }} ({{topic.posts|length}})
+                    </a>
+                    <small class = ""> {{topic.description}}</small>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

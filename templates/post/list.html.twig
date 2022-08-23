@@ -6,14 +6,10 @@
 
 {% block body %}
 	<div id="post_list">
-		<h1 class="text-center border-bottom pb-3">
-			{{ category_name|capitalize }}
-		</h1>
+		<h1 class="text-center border-bottom pb-3">{{ category_name|capitalize }}</h1>
 
 		{% if posts is empty %}
-			<div class="text-center fw-bold">
-				Tu jeszcze nic nie ma
-			</div>
+			<div class="text-center fw-bold">Tu jeszcze nic nie ma</div>
 		{% else %}
 			<div class="row g-2 border p-2 mt-4">
 				{% for post in posts %}
