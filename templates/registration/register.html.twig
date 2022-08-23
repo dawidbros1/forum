@@ -1,9 +1,12 @@
-{% extends 'form/form.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Rejestracja{% endblock %}
 {% block action %}registration_form{% endblock %}
 
-{% block body_form %}
-  {{ form_row(form) }}
-  {{ form_errors(form) }}
+{% block body %}
+  <div class= "border p-2">
+      {{ form_label(form) }}
+      {{ form_start(form) }}
+      {{ form_end(form) }}
+  </div>
 {% endblock %}
