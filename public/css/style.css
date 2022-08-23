@@ -17,20 +17,36 @@ a{
    bottom: 10px;
 }
 
-#post_list img{
+.items img{
    width: 20px;
    height: 20px;
+}
+
+.center{
    position: absolute;
    left: 50%;
    top: 50%;
    transform: translate(-50%, -50%);
 }
 
-#post_show .date{
+#comments .date{
    background-color: rgb(249, 233, 233);
 }
 
-#post_show img.avatar{
+img.avatar{
    width: 50px;
    height: 50px;
+}
+
+#comments .comment, .item{
+   border-bottom: 1px solid lightgray;
+}
+
+#comments .comment:last-child, .item:last-child{
+   border-bottom: none;
+}
+
+.banner{
+   width: 100%;
+   background-color: rgb(69, 202, 246);
 }
