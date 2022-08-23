@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
+use App\Entity\Topic;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +15,11 @@ class HomepageController extends AbstractController
      */
     public function index(EntityManagerInterface $em): Response
     {
-        $repository = $em->getRepository(Category::class);
-        $categories = $repository->findAll();
+        $repository = $em->getRepository(Topic::class);
+        $topics = $repository->findAll();
 
         return $this->render('homepage/index.html.twig', [
-            'categories' => $categories,
+            'topics' => $topics,
         ]);
     }
 }
