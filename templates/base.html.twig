@@ -39,11 +39,7 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="mynavbar">
-					<ul class="navbar-nav me-auto">
-						{% if app.user %}
-							<li class="nav-item"><a class="nav-link" href="{{path("post_create")}}">Dodaj temat</a></li>
-						{% endif %}
-					</ul>
+					<ul class="navbar-nav me-auto"></ul>
 
 					<ul class="navbar-nav">
 						{% if app.user == null %}
@@ -60,8 +56,8 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li><a class="dropdown-item border-bottom" href="#">Profil</a></li>
-									<li><a class="dropdown-item" href="#">Moje tematy</a></li>
-									<li><a class="dropdown-item border-bottom" href="#">Moje komentarze</a></li>
+									<li><a class="dropdown-item" href="{{path("post_my_list")}}">Moje tematy</a></li>
+									<li><a class="dropdown-item border-bottom" href="{{path("comment_my_list")}}">Moje komentarze</a></li>
 									<li><a class="dropdown-item" href="{{path("app_logout")}}">Wyloguj</a></li>
 								</ul>
 							</li>
@@ -81,7 +77,12 @@
 			{# NAVBAR END #}
 
 			<div class = "col-10 col-md-8 mx-auto mt-2 pb-3">
-					{% block body %}{% endblock %}
+				<div id = "breadcrumbs" class = "pb-1">
+					<a href = "{{path("app_homepage")}}">Strona główna</a>
+					{% block breadcrumbs %}{% endblock %}
+				</div>
+
+				{% block body %}{% endblock %}
 			</div>
 		</body>
 </html>
