@@ -34,10 +34,10 @@ class Post
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category")
-     * @var Category
+     * @ORM\ManyToOne(targetEntity="App\Entity\Topic")
+     * @var Topic
      */
-    private $category;
+    private $topic;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
@@ -81,14 +81,14 @@ class Post
         return $this;
     }
 
-    public function getCategory()
+    public function getTopic()
     {
-        return $this->category;
+        return $this->topic;
     }
 
-    public function setCategory($category): self
+    public function setTopic($topic): self
     {
-        $this->category = $category;
+        $this->topic = $topic;
 
         return $this;
     }
