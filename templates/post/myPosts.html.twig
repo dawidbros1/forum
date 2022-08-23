@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Moje posty{% endblock %}
+
+{% block body %}
+	<div id="post_list" class="border p-2">
+		<h1 class="text-center border-bottom pb-3">Moje posty</h1>
+
+		{% if posts is empty %}
+			<div class="text-center fw-bold">Nie masz żadnych postów</div>
+		{% else %}
+			<div class="row g-2 border p-2 mt-4">
+				{% for post in posts %}
+					<div class="col-12 col-md-6 my-2">
+						<div class="bg-light col-12 d-flex border">
+							<a class="col-11 p-3 fw-bold text-center d-block" href="{{path("post_show", {id: post.id})}}" role="button">
+								{{ post.title }}
+							</a>
+                     <a class="border-start col-1 d-block position-relative" href="{{ path( 'post_edit', { id: post.id } ) }}">
+                        <img src="{{ asset('images/settings.png') }}"/>
+                     </a>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
