@@ -49,8 +49,9 @@ class PostController extends AbstractController
         }
 
         return $this->render('post/form.html.twig', [
-            'title' => "Dodaj temat",
+            'title' => "Tworzenie posta",
             'form' => $form->createView(),
+            'topic' => $topic
         ]);
     }
 
@@ -84,8 +85,9 @@ class PostController extends AbstractController
         }
 
         return $this->render('post/form.html.twig', [
-            'title' => "Edytuj temat",
+            'title' => "Educja posta",
             'form' => $form->createView(),
+            'topic' => $post->getTopic()
         ]);
     }
 

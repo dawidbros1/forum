@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Post;
+use App\Entity\Thread;
 use App\Entity\Topic;
-use App\Form\PostFormType;
 use App\Form\TopicFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,12 +18,13 @@ use Symfony\Component\Security\Core\Security;
 class TopicController extends AbstractController
 {
     /**
-     * @Route("/create/{topic_id}", name="topic_create")
+     * @Route("/create/{thread_id}", name="topic_create")
      */
     public function create(Request $request, EntityManagerInterface $em, Security $security)
     {
-        $topic = new Topic();
+        $thread = $em->getRepository(Thread::class)->find($request->get('thread_id'));
 
+        $topic = new Topic();
         $form = $this->createForm(TopicFormType::class, $topic, [
             'label' => "Dodaj temat",
             'label_attr' => [
@@ -39,16 +39,18 @@ class TopicController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $topic->setDate(new \DateTime());
             $topic->setUser($security->getUser());
+            $topic->setThread($thread);
             $em->persist($topic);
             $em->flush();
 
             $this->addFlash('success', 'Temat został utworzony');
-            return $this->redirectToRoute('topic_create', ['topic_id' => $topic->getId()]);
+            return $this->redirectToRoute('topic_create', ['thread_id' => $thread->getId()]);
         }
 
         return $this->render('topic/form.html.twig', [
             'title' => "Dodaj temat",
             'form' => $form->createView(),
+            'thread' => $thread
         ]);
     }
 
@@ -84,28 +86,17 @@ class TopicController extends AbstractController
         return $this->render('topic/form.html.twig', [
             'title' => "Edytuj temat",
             'form' => $form->createView(),
+            'thread' => $topic->getThread()
         ]);
     }
 
     /**
      * @Route("/show/{id}", name="topic_show")
      */
-    // public function show(Request $request, EntityManagerInterface $em)
     public function show(Topic $topic, Request $request, EntityManagerInterface $em, Security $security)
     {
-        // $post = new Post();
-
-        // $form = $this->createForm(PostFormType::class, $post, [
-        //     // 'action' => $this->generateUrl('post_create', ['topic_id' => $topic->getId()]),
-        //     'label' => false,
-        // ]);
-
-        // $this->addButtonToForm($form, "Dodaj posta 25");
-        // $form->handleRequest($request);
-
         return $this->render('topic/show.html.twig', [
             'topic' => $topic,
-            // 'form' => $form->createView(),
         ]);
     }
 
