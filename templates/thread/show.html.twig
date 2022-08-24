@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumbs %}
+	&rarr; <a href = "#"> {{ thread.name }}</a>
+{% endblock %}
+
+{% block body %}
+	<div id="thread_show">
+		<div class="position-relative pb-3 mb-4">
+			<a href="{{path("topic_create", {thread_id: thread.id})}}" class="position-absolute btn btn-primary px-3 py-1 end-0 top-0">Dodaj temat</a>
+		</div>
+
+		<div>
+			<div class="banner py-3 ps-2 text-white">
+				{{ thread.name|capitalize }}
+			</div>
+			{% if thread.topics is empty %}
+				<div class="text-center fw-bold">
+					Tu jeszcze nic nie ma
+				</div>
+			{% else %}
+				<div class="items">
+					{% for topic in thread.topics %}
+						<div class="bg-light d-flex item">
+							<div class = "col-2 col-sm-1 position-relative">
+								<img class="avatar center d-block p-2" src="{{ asset('images/avatar.png') }}"/>
+							</div>
+
+							<div class = "col-9 col-sm-10 p-3">
+								<a class=" d-block" href="{{path("topic_show", {id: topic.id})}}" role="button">
+									{{ topic.title }} ({{topic.posts|length}})
+								</a>
+								<div>{{topic.user.email}}, {{topic.date|ago}}</div>
+							</div>
+
+							{% if app.user and app.user.id == topic.user.id %}
+								<a class="border-start col-1 d-block position-relative" href="{{ path( 'topic_edit', { id: topic.id } ) }}">
+									<img class = "center" src="{{ asset('images/settings.png') }}"/>
+								</a>
+							{% endif %}
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
