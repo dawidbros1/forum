@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Topic;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,12 +19,25 @@ class TopicFormType extends AbstractType
                 'mapped' => false,
             ])
             ->add('title', TextType::class, [
-                'label' => "Temat",
+                'label' => "Nazwa tematu",
                 'label_attr' => [
                     'class' => "fw-bold",
                 ],
                 'attr' => [
                     'placeholder' => "Wprowadź nazwę tematu",
+                ],
+                'row_attr' => [
+                    'class' => "mb-2 border p-2",
+                ],
+            ])
+            ->add('text', TextareaType::class, [
+                'label' => "Treść tematu",
+                'label_attr' => [
+                    'class' => "fw-bold",
+                ],
+                'attr' => [
+                    'placeholder' => "Wprowadź treść tematu",
+                    "rows" => 6,
                 ],
                 'row_attr' => [
                     'class' => "mb-2 border p-2",
