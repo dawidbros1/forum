@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Topic;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Thread;
 
 class HomepageController extends AbstractController
 {
@@ -15,11 +15,11 @@ class HomepageController extends AbstractController
      */
     public function index(EntityManagerInterface $em): Response
     {
-        $repository = $em->getRepository(Topic::class);
-        $topics = $repository->findAll();
+        $repository = $em->getRepository(Thread::class);
+        $threads = $repository->findAll();
 
         return $this->render('homepage/index.html.twig', [
-            'topics' => $topics,
+            'threads' => $threads,
         ]);
     }
 }
