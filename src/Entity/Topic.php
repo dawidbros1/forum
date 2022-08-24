@@ -33,6 +33,11 @@ class Topic
     private $title;
 
     /**
+     * @ORM\Column(type="string", length=4096)
+     */
+    private $text;
+
+    /**
      * @ORM\Column(type="datetime")
      * @Assert\Type("DateTimeInterface")
      * @var \DateTime
@@ -52,9 +57,10 @@ class Topic
     private $posts;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Thread")
+     * @var Thread
      */
-    private $description;
+    private $thread;
 
     public function getId(): ?int
     {
@@ -146,21 +152,41 @@ class Topic
     }
 
     /**
-     * Get the value of description
+     * Get the value of text
      */
-    public function getDescription()
+    public function getText()
     {
-        return $this->description;
+        return $this->text;
     }
 
     /**
-     * Set the value of description
+     * Set the value of text
      *
      * @return  self
      */
-    public function setDescription($description)
+    public function setText($text)
     {
-        $this->description = $description;
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of thread
+     */
+    public function getThread()
+    {
+        return $this->thread;
+    }
+
+    /**
+     * Set the value of thread
+     *
+     * @return  self
+     */
+    public function setThread($thread)
+    {
+        $this->thread = $thread;
 
         return $this;
     }
