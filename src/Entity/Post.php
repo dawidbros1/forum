@@ -46,12 +46,6 @@ class Post
     private $comments;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=3, max=255)
-     */
-    private $title;
-
-    /**
      * @ORM\Column(type="string", length=4096)
      * @Assert\Length(min=3, max=4096)
      */
@@ -89,18 +83,6 @@ class Post
     public function setTopic($topic): self
     {
         $this->topic = $topic;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
 
         return $this;
     }
