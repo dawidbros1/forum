@@ -78,7 +78,7 @@
 
 			<div class = "col-10 col-md-8 mx-auto mt-2 pb-3">
 				<div id = "breadcrumbs" class = "pb-1">
-					<a href = "{{path("app_homepage")}}">Strona główna</a>
+					{% block breadcrumbs_homepage %} <a href = "{{path("app_homepage")}}">Strona główna</a> {% endblock %}
 					{% block breadcrumbs %}{% endblock %}
 				</div>
 

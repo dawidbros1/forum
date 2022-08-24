@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block breadcrumbs %}
+    &rarr; <a href = "{{path("thread_show", {id: post.topic.thread.id})}}">{{post.topic.thread.name}} </a> 
+    &rarr; <a href = "{{path("topic_show", {id: post.topic.id})}}">{{post.topic.title}} </a> 
+{% endblock %}
+
+{% block body %}
+  <div class="mt-3 p-3 border">
+    <div id = "post" class = "p-2 mb-2 border-bottom">
+      <div class="date text-end fw-bold pe-2">{{post.date|date("d F Y, H:i:s")}}</div>
+      <div class="text">{{post.text}}</div>
+      <br>
+      <div class="author"><span class = "fw-bold">Author:</span> {{post.user.email}}</div>
+    </div>
+
+    {{ form_start(form) }}
+    {{ form_end(form) }}
+  </div>
+{% endblock %}

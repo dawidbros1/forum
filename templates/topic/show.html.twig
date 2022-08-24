@@ -1,26 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block breadcrumbs %}
+	&rarr; <a href = "{{path("thread_show", {id: topic.thread.id})}}"> {{ topic.thread.name }}</a>
 	&rarr; <a href = "#"> {{ topic.title }}</a>
 {% endblock %}
 
 {% block body %}
 	<div id="topic_show">
-		{# <div id = "topic" class = "border p-2 mb-3"> #}
-		{# <div class="title fw-bold text-center pb-1">{{topic.title}}</div> #}
-		{# <div class="date text-end fw-bold pe-2">{{topic.date|date("d/m/Y")}}</div> #}
-		{# <br> #}
-		{# <div class="author"><span class = "fw-bold">Author:</span> {{topic.user.email}}</div> #}
-		{# </div> #}
 
-		<div class="position-relative pb-3 mb-4">
-			<a href="{{path("post_create", {topic_id: topic.id})}}" class="position-absolute btn btn-primary px-3 py-1 end-0 top-0">Napisz posta</a>
-		</div>
+		{# <div class="position-relative pb-3 mb-4">
+			
+		</div> #}
 
 		<div>
-			<div class="banner py-3 ps-2 text-white">
-				Posty
+			<div class="banner text-center py-3 ps-2 text-white">{{topic.title}}</div>
+
+			<div id = "topic" class = "p-2 position-relative">
+				<div class="date text-end fw-bold pe-2">{{topic.date|date("d F Y H:i:s")}}</div>
+				<div class = "pb-2">{{topic.text}}</div>
+				<div class = "d-flex">
+					<div class="author w-100"><span class = "fw-bold">Author:</span> {{topic.user.email}}</div>
+					<a href="{{path("post_create", {topic_id: topic.id})}}" class="px-3 py-1">Napisz&nbsp;posta</a>
+				</div>
 			</div>
+
 			{% if topic.posts is empty %}
 				<div class="text-center fw-bold">
 					Tu jeszcze nic nie ma
@@ -33,18 +36,42 @@
 								<img class="avatar center d-block p-2" src="{{ asset('images/avatar.png') }}"/>
 							</div>
 
-							<div class = "col-9 col-sm-10 p-3">
-								<a class=" d-block" href="{{path("post_show", {id: post.id})}}" role="button">
-									{{ post.title }} ({{post.comments|length}})
-								</a>
-								<div>{{post.user.email}}, {{post.date|ago}}</div>
-							</div>
+							<div class = "col-10 col-sm-11 p-3 pb-1">
+								<a class=" d-block" href="{{path("post_show", {id: post.id})}}" role="button"></a>
+								<div><span class = "fw-bold">{{post.user.email}}</span>, {{post.date|ago}}</div>
+								<div>{{post.text}}</div>
 
-							{% if app.user and app.user.id == post.user.id %}
-								<a class="border-start col-1 d-block position-relative" href="{{ path( 'post_edit', { id: post.id } ) }}">
-									<img class = "center" src="{{ asset('images/settings.png') }}"/>
-								</a>
-							{% endif %}
+								<div class = "d-flex flex-nowrap text-end py-1 px-2">
+									{% if app.user and app.user.id == post.user.id  %}
+										<a href = "#" class = "pe-2 w-100">Usuń</a>
+										<a href="{{ path( 'post_edit', { id: post.id } ) }}" class = "pe-2">Edytuj</a>
+										<a href = "{{path("comment_create", {post_id:post.id})}}" class = "">Napisz&nbsp;komentarz</a>
+									{% endif %}
+								</div>
+								{% if post.comments is empty %}
+								{% else %}
+									{% for comment in post.comments %}
+									<div class = "comment pt-2 border-top">
+										<div class = "d-flex">
+											<img class = "avatar" src="{{ asset('images/avatar.png') }}"/>
+											<div class = "ms-2">
+												<div class = "fw-bold">{{comment.user.email}}</div>
+												<div class = "">{{comment.date|ago}}</div>
+											</div>
+										</div>
+										<div class = "">{{comment.text}}</div>
+										{% if app.user %}
+											{% if app.user.id == comment.user.id %}
+											<div class = "links ms-5">
+												<a class="me-2" href = "{{path("comment_edit", {id: comment.id})}}">Edytuj</a>
+												<a href = "{{path("comment_delete", {id: comment.id})}}">Usuń</a>
+											</div>
+											{% endif %}
+										{% endif %}
+									</div>
+									{% endfor %}
+								{% endif %}
+							</div>
 						</div>
 					{% endfor %}
 				</div>
