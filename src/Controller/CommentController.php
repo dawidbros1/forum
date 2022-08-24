@@ -7,6 +7,7 @@ use App\Entity\Post;
 use App\Form\CommentFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
@@ -17,12 +18,18 @@ use Symfony\Component\Security\Core\Security;
 class CommentController extends AbstractController
 {
     /**
-     * @Route("/create", name="comment_create")
+     * @Route("/create/{post_id}", name="comment_create")
      */
     public function create(Request $request, Security $security, EntityManagerInterface $em)
     {
         $comment = new Comment();
-        $form = $this->createForm(CommentFormType::class, $comment);
+        $form = $this->createForm(CommentFormType::class, $comment, [
+            'label' => "Tworzenie komentarza",
+            'label_attr' => [
+                'class' => "",
+            ],
+        ]);
+        $this->addButtonToForm($form, "Dodaj komentarz");
         $form->handleRequest($request);
 
         $postRepository = $em->getRepository(Post::class);
@@ -35,9 +42,37 @@ class CommentController extends AbstractController
             $em->persist($comment);
             $em->flush();
             $this->addFlash('success', 'Komentarz został utworzony');
+            return $this->redirectToRoute('topic_show', ['id' => $post->getTopic()->getId()]);
         }
 
-        return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
+        return $this->render('comment/form.html.twig', [
+            'form' => $form->createView(),
+            'post' => $post,
+            'title' => "Dodaj komentarz"
+        ]);
+    }
+
+    /**
+     * @Route("/edit/{id}", name="comment_edit")
+     */
+    public function edit(Comment $comment, Request $request, EntityManagerInterface $em)
+    {
+        $form = $this->createForm(CommentFormType::class, $comment);
+        $this->addButtonToForm($form, "Edytuj komentarz");
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($comment);
+            $em->flush();
+            $this->addFlash('success', 'Komentarz został edytowany');
+            return $this->redirectToRoute('topic_show', ['id' => $comment->getPost()->getTopic()->getId()]);
+        }
+
+        return $this->render('comment/form.html.twig', [
+            'form' => $form->createView(),
+            'post' => $comment->getPost(),
+            'title' => "Edytuj komentarz"
+        ]);
     }
 
     /**
@@ -60,6 +95,17 @@ class CommentController extends AbstractController
     {
         $repository = $em->getRepository(Comment::class);
         $repository->remove($comment, true);
-        return $this->redirectToRoute("post_show", ['id' => $comment->getPost()->getId()]);
+        return $this->redirectToRoute("topic_show", ['id' => $comment->getPost()->getTopic()->getId()]);
+    }
+    private function addButtonToForm($form, string $label)
+    {
+        $form->add('submit', SubmitType::class, [
+            'label' => $label,
+            'attr' => [
+                'class' => "btn-primary w-100 fw-bold",
+            ],
+        ]);
+
+        return $form;
     }
 }
