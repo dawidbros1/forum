@@ -40,7 +40,7 @@ class Post
     private $topic;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", cascade={"remove"})
      * @var Comment[]|Collection
      */
     private $comments;

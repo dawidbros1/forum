@@ -51,7 +51,7 @@ class Topic
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="topic")
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="topic", cascade={"remove"})
      * @var Post[]|Collection
      */
     private $posts;
