@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\Topic;
-use App\Form\CommentFormType;
 use App\Form\PostFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +17,13 @@ use Symfony\Component\Security\Core\Security;
  */
 class PostController extends AbstractController
 {
+    public function __construct(EntityManagerInterface $entityManager, Security $security)
+    {
+        $this->entityManager = $entityManager;
+        $this->repository = $entityManager->getRepository(Post::class);
+        $this->security = $security;
+    }
+
     /**
      * @Route("/create/{topic_id}", name="post_create")
      */
@@ -109,14 +114,9 @@ class PostController extends AbstractController
     /**
      * @Route("/list", name="post_list")
      */
-    function list(Request $request, EntityManagerInterface $em) {
-        $category_id = $request->get('category_id', 0);
-        $repository = $em->getRepository(Category::class);
-        $category = $repository->find($category_id);
-
+    function list() {
         return $this->render('post/list.html.twig', [
-            'category_name' => $category->getName(),
-            'posts' => $category->getPosts(),
+            'posts' => $this->security->getUser()->getPosts()
         ]);
     }
 
@@ -132,7 +132,7 @@ class PostController extends AbstractController
             'posts' => $posts,
         ]);
     }
-    
+
     private function addButtonToForm($form, string $label)
     {
         $form->add('submit', SubmitType::class, [

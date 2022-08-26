@@ -17,6 +17,13 @@ use Symfony\Component\Security\Core\Security;
  */
 class TopicController extends AbstractController
 {
+    public function __construct(EntityManagerInterface $entityManager, Security $security)
+    {
+        $this->entityManager = $entityManager;
+        $this->repository = $entityManager->getRepository(Topic::class);
+        $this->security = $security;
+    }
+
     /**
      * @Route("/create/{thread_id}", name="topic_create")
      */
@@ -50,7 +57,7 @@ class TopicController extends AbstractController
         return $this->render('topic/form.html.twig', [
             'title' => "Dodaj temat",
             'form' => $form->createView(),
-            'thread' => $thread
+            'thread' => $thread,
         ]);
     }
 
@@ -86,11 +93,11 @@ class TopicController extends AbstractController
         return $this->render('topic/form.html.twig', [
             'title' => "Edytuj temat",
             'form' => $form->createView(),
-            'thread' => $topic->getThread()
+            'thread' => $topic->getThread(),
         ]);
     }
 
-        /**
+    /**
      * @Route("/delete/{id}", name="topic_delete")
      */
     public function delete(Topic $topic, EntityManagerInterface $em, Security $security)
@@ -108,6 +115,16 @@ class TopicController extends AbstractController
     {
         return $this->render('topic/show.html.twig', [
             'topic' => $topic,
+        ]);
+    }
+
+    /**
+     * @Route("/my_list", name="topic_my_list")
+     */
+    public function listMyTopics()
+    {
+        return $this->render('topic/myTopics.html.twig', [
+            'topics' => $this->security->getUser()->getTopics(),
         ]);
     }
 

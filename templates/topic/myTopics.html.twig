@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Moje tematy{% endblock %}      
+
+{% block body %}
+<div id="myTopics">
+   <div class="banner py-2 ps-2 text-white">Moje tematy</div>
+   {% if topics is empty %}
+         <div class = "text-center fw-bold">Tu jeszcze nic nie ma</div>
+   {% else %}
+         {% for topic in topics %}
+            <div class = "topic mt-2">
+               <div class = "d-flex">
+                  <img class = "avatar" src="{{ asset('images/avatar.png') }}"/>
+                  <div class = "ms-2">
+                     <a class = "fw-bold" href="{{path("thread_show", {id: topic.thread.id})}}">{{topic.thread.name}}</a> &rarr; 
+                     <span class = "fw-bold">{{topic.title}}</span>
+                     <div class = "">{{topic.date|date("d/m/Y H:i:s")}}</div>
+                  </div>
+               </div>
+            </div>
+         {% endfor %}
+   {% endif %}
+</div>
+{% endblock %}

@@ -51,13 +51,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Topic[]|Collection
      * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="user", cascade={"remove"})
      */
-    private $posts;
+    private $topics;
 
     /**
      * @var Post[]|Collection
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", cascade={"remove"})
      */
-    private $topics;
+    private $posts;
 
     /**
      * @var Comment[]|Collection
