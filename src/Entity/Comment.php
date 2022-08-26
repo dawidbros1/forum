@@ -13,6 +13,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Comment
 {
+    public function __construct()
+    {
+        $this->setDate(new \DateTime);
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
