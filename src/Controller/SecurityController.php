@@ -31,6 +31,7 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
+        $this->addFlash('success', "Nastąpił wylogowanie z systemu");
         return $this->redirectToRoute("app_register");
     }
 }
