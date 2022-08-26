@@ -90,6 +90,17 @@ class TopicController extends AbstractController
         ]);
     }
 
+        /**
+     * @Route("/delete/{id}", name="topic_delete")
+     */
+    public function delete(Topic $topic, EntityManagerInterface $em, Security $security)
+    {
+        $em->remove($topic);
+        $em->flush();
+
+        return $this->redirectToRoute('thread_show', ['id' => $topic->getThread()->getId()]);
+    }
+
     /**
      * @Route("/show/{id}", name="topic_show")
      */
