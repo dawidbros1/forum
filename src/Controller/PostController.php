@@ -51,7 +51,7 @@ class PostController extends AbstractController
         return $this->render('post/form.html.twig', [
             'title' => "Tworzenie posta",
             'form' => $form->createView(),
-            'topic' => $topic
+            'topic' => $topic,
         ]);
     }
 
@@ -87,8 +87,23 @@ class PostController extends AbstractController
         return $this->render('post/form.html.twig', [
             'title' => "Educja posta",
             'form' => $form->createView(),
-            'topic' => $post->getTopic()
+            'topic' => $post->getTopic(),
         ]);
+    }
+
+    /**
+     * @Route("/delete/{id}", name="post_delete")
+     */
+    public function delete(Post $post, EntityManagerInterface $em, Security $security)
+    {
+        $em->remove($post);
+        $em->flush();
+
+        // $category_id = $request->get('category_id', 0);
+        // $repository = $em->getRepository(Category::class);
+        // $category = $repository->find($category_id);
+
+        return $this->redirectToRoute('topic_show', ['id' => $post->getTopic()->getId()]);
     }
 
     /**
@@ -117,27 +132,7 @@ class PostController extends AbstractController
             'posts' => $posts,
         ]);
     }
-
-    /**
-     * @Route("/show/{id}", name="post_show")
-     */
-    // public function show(Request $request, EntityManagerInterface $em)
-    public function show(Post $post, Request $request)
-    {
-        $comment = new Comment();
-        $form = $this->createForm(CommentFormType::class, $comment, [
-            'action' => $this->generateUrl('comment_create', ['post_id' => $post->getId()]),
-            'label' => false,
-        ]);
-
-        $form->handleRequest($request);
-
-        return $this->render('post/show.html.twig', [
-            'post' => $post,
-            'form' => $form->createView(),
-        ]);
-    }
-
+    
     private function addButtonToForm($form, string $label)
     {
         $form->add('submit', SubmitType::class, [
