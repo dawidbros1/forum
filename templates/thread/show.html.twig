@@ -6,18 +6,18 @@
 
 {% block body %}
 	<div id="thread_show">
-		<div class="position-relative pb-3 mb-4">
-			<a href="{{path("topic_create", {thread_id: thread.id})}}" class="position-absolute btn btn-primary px-3 py-1 end-0 top-0">Dodaj temat</a>
-		</div>
-
+		{% if app.user %}
+			<div class="position-relative pb-3 mb-4">
+				<a href="{{path("topic_create", {thread_id: thread.id})}}" class="position-absolute btn btn-primary px-3 py-1 end-0 top-0">Dodaj temat</a>
+			</div>
+		{% endif %}
+	
 		<div>
 			<div class="banner py-3 ps-2 text-white">
 				{{ thread.name|capitalize }}
 			</div>
 			{% if thread.topics is empty %}
-				<div class="text-center fw-bold">
-					Tu jeszcze nic nie ma
-				</div>
+				<div class="text-center fw-bold">Tu jeszcze nic nie ma</div>
 			{% else %}
 				<div class="items">
 					{% for topic in thread.topics %}
@@ -26,18 +26,20 @@
 								<img class="avatar center d-block p-2" src="{{ asset('images/avatar.png') }}"/>
 							</div>
 
-							<div class = "col-9 col-sm-10 p-3">
+							<div class = "col-10 col-sm-11 p-3">
 								<a class=" d-block" href="{{path("topic_show", {id: topic.id})}}" role="button">
 									{{ topic.title }} ({{topic.posts|length}})
 								</a>
 								<div>{{topic.user.email}}, {{topic.date|ago}}</div>
-							</div>
 
-							{% if app.user and app.user.id == topic.user.id %}
-								<a class="border-start col-1 d-block position-relative" href="{{ path( 'topic_edit', { id: topic.id } ) }}">
-									<img class = "center" src="{{ asset('images/settings.png') }}"/>
-								</a>
-							{% endif %}
+								{% if app.user and app.user.id == topic.user.id %}
+									<div class = "d-flex">
+										<span class = "me-auto"></span>
+										<a class="pe-2" href = "{{path("topic_edit", {id: topic.id})}}">Edytuj</a>
+										<a class="pe-2" href = "{{path("topic_delete", {id: topic.id})}}">Usuń</a>
+									</div>
+								{% endif %}
+							</div>
 						</div>
 					{% endfor %}
 				</div>
