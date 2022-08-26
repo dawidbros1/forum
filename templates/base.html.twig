@@ -71,6 +71,14 @@
 				</div>
 			{% endfor %}
 
+			{% for message in app.flashes('error') %}
+				<div class="alert alert-error collapse show">
+					{{ message }}
+
+					<span role="button" class="position-absolute end-0 top-0 text-danger fw-bold fs-3 mt-2 me-2" data-bs-toggle="collapse" data-bs-target=".alert">X</span>
+				</div>
+			{% endfor %}
+
 			{# NAVBAR END #}
 
 			<div class = "col-10 col-md-8 mx-auto mt-2 pb-3">
