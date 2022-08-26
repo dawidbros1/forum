@@ -3,8 +3,8 @@
 {% block title %}Moje komentarze{% endblock %}      
 
 {% block body %}
-<div id="comments" class="border p-2">
-   <h1 class="text-center border-bottom pb-3">Moje komentarze</h1>
+<div id="comments">
+   <div class="banner py-2 ps-2 text-white">Moje komentarze</div>
    {% if comments is empty %}
          <div class = "text-center fw-bold">Tu jeszcze nic nie ma</div>
    {% else %}
@@ -13,18 +13,13 @@
                <div class = "d-flex">
                   <img class = "avatar" src="{{ asset('images/avatar.png') }}"/>
                   <div class = "ms-2">
-                     <span>{{comment.post.category.name|capitalize}}: </span>
-                     <a class = "fw-bold" href = {{path("post_show", {id: comment.post.id})}}>{{comment.post.title}}</a>
-                     <div class = "">{{comment.date|date("d/m/Y h:i:s")}}</div>
+                      <a class = "fw-bold" href = {{path("thread_show", {id: comment.post.topic.thread.id})}}>{{comment.post.topic.thread.name}}</a> &rarr; 
+                      <a class = "fw-bold" href = {{path("topic_show", {id: comment.post.topic.id})}}>{{comment.post.topic.title}}</a>
+                     <div class = "">{{comment.date|date("d/m/Y H:i:s")}}</div>
                   </div>
                </div>
 
                <div class = "">{{comment.text}}</div>
-
-               <div class = "links ms-5">
-                  <a class="me-2" href = "">edytuj</a>
-                  <a href = "{{path("comment_delete", {id: comment.id})}}">usuń</a>
-               </div>
             </div>
          {% endfor %}
    {% endif %}

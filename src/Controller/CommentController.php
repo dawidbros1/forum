@@ -90,13 +90,10 @@ class CommentController extends AbstractController
     /**
      * @Route("/my_list/", name="comment_my_list")
      */
-    public function listMyComments(Request $request, EntityManagerInterface $em, Security $security)
+    public function listMyComments()
     {
-        $repository = $em->getRepository(Comment::class);
-        $comments = $repository->findBy(['user' => $security->getUser()]);
-
         return $this->render('comment/myComments.html.twig', [
-            'comments' => $comments,
+            'comments' => $this->security->getUser()->getComments(),
         ]);
     }
 
