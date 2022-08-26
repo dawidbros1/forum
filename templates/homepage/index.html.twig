@@ -4,17 +4,32 @@
 
 {% block body %}
 <div id = "homepage_home">
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <div class="position-relative pb-2">
+            <a href="{{path("thread_create")}}" class="position-absolute btn btn-primary px-3 py-1 end-0 top-0">Dodaj wątek</a>
+        </div>
+    {% endif %}
+
     <h1 class = "fs-5">Strona główna</h1>
     <div class = "mt-2 bg-light"> 
-        <div class = "banner py-3 ps-2 text-white"> Dostępne wątki </div>
+        <div class = "banner py-2 ps-2 text-white"> Dostępne wątki </div>
 
         <div class = "">
             {% for thread in threads %}
-                <div class = "item p-3 pt-0 mt-2"> 
+                <div class = "item p-3 pt-0 mt-2 position-relative"> 
                     <a class = "d-block" href="{{path("thread_show", {id: thread.id})}}" role="button">
                         {{ thread.name|capitalize  }} ({{thread.topics|length}})
                     </a>
                     <small class = ""> {{thread.description}}</small>
+
+                    {% if app.user and is_granted('ROLE_ADMIN') %}
+                        <div class = "mb-2"> </div>
+                        <div class = "position-absolute end-0 bottom-0 me-2 pb-1">
+                            <span class = "me-auto"></span>
+                            <a class="pe-2" href = "{{path("thread_edit", {id: thread.id})}}">Edytuj</a>
+                            <a class="pe-2" href = "{{path("thread_delete", {id: thread.id})}}">Usuń</a>
+                        </div>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
