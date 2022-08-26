@@ -25,13 +25,8 @@ class DbSeedUserCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $this->deleteExistingUsers();
-
-        $user = new User();
-        $user->setRoles([]);
-        $user->setPassword('$2y$13$RQ39K5I3jEZ6XU1I3TQSOuytdidd3AfP7lxuqlHWi0yfPXFMQ0PiW'); // admin123
-
-        $this->add('user@wp.pl', []);
-        $this->add('admin@wp.pl', ["ROLE_ADMIN"]);
+        $this->addUser('user@wp.pl', []);
+        $this->addUser('admin@wp.pl', ["ROLE_ADMIN"]);
         $io->success('Users have been generated');
 
         return Command::SUCCESS;
@@ -47,7 +42,7 @@ class DbSeedUserCommand extends Command
         }
     }
 
-    private function add($email, $roles)
+    private function addUser($email, $roles)
     {
         $user = new User();
         $user->setEmail($email);
