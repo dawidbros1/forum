@@ -18,7 +18,7 @@ class DbSeedUserCommand extends Command
     }
 
     protected static $defaultName = 'db:seed:user';
-    protected static $defaultDescription = 'The command deletes existing users and generates new 5 users';
+    protected static $defaultDescription = 'The command deletes existing users and generates new 2 users';
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -30,19 +30,8 @@ class DbSeedUserCommand extends Command
         $user->setRoles([]);
         $user->setPassword('$2y$13$RQ39K5I3jEZ6XU1I3TQSOuytdidd3AfP7lxuqlHWi0yfPXFMQ0PiW'); // admin123
 
-        $emails = [
-            "Piotr@wp.pl",
-            "Bogdan@wp.pl",
-            "Maciej@wp.pl",
-            "Tomasz@wp.pl",
-            "Kacper@wp.pl",
-        ];
-
-        foreach ($emails as $key => $email) {
-            $flush = $key == (count($emails) - 1);
-            $this->repository->add(clone $user->setEmail($email), $flush);
-        }
-
+        $this->add('user@wp.pl', []);
+        $this->add('admin@wp.pl', ["ROLE_ADMIN"]);
         $io->success('Users have been generated');
 
         return Command::SUCCESS;
@@ -56,5 +45,14 @@ class DbSeedUserCommand extends Command
             $flush = $key == (count($users) - 1);
             $this->repository->remove($user, $flush);
         }
+    }
+
+    private function add($email, $roles)
+    {
+        $user = new User();
+        $user->setEmail($email);
+        $user->setPassword('$2y$13$RQ39K5I3jEZ6XU1I3TQSOuytdidd3AfP7lxuqlHWi0yfPXFMQ0PiW'); // admin123
+        $user->setRoles($roles);
+        $this->repository->add($user, true);
     }
 }
