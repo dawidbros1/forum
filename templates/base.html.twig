@@ -43,20 +43,17 @@
 
 					<ul class="navbar-nav">
 						{% if app.user == null %}
-							<li class="nav-item">
-								<a class="nav-link" href="{{path("app_register")}}">Rejestracja</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="{{path("app_login")}}">Logowanie</a>
-							</li>
+							<li class="nav-item"><a class="nav-link" href="{{path("app_register")}}">Rejestracja</a></li>
+							<li class="nav-item"><a class="nav-link" href="{{path("app_login")}}">Logowanie</a></li>
 						{% else %}
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
 									{{app.user.email}}
 								</a>
-								<ul class="dropdown-menu">
+								<ul class="dropdown-menu dropdown-menu-end">
 									<li><a class="dropdown-item border-bottom" href="#">Profil</a></li>
 									<li><a class="dropdown-item" href="{{path("post_my_list")}}">Moje tematy</a></li>
+									<li><a class="dropdown-item border-bottom" href="{{path("comment_my_list")}}">Moje posty</a></li>
 									<li><a class="dropdown-item border-bottom" href="{{path("comment_my_list")}}">Moje komentarze</a></li>
 									<li><a class="dropdown-item" href="{{path("app_logout")}}">Wyloguj</a></li>
 								</ul>
