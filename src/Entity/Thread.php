@@ -15,6 +15,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Thread
 {
+    public function __construct(array $data = [])
+    {
+        if (!empty($data)) {
+            $this->setName($data['name'] ?? "");
+            $this->setDescription($data['description'] ?? "");
+        }
+
+        $this->setDate(new \DateTime);
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -40,7 +50,7 @@ class Thread
     private $date;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="thread")
+     * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="thread", cascade={"remove"})
      * @var Topic[]|Collection
      */
     private $topics;
