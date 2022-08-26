@@ -19,7 +19,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public function __construct()
     {
+        $this->topics = new ArrayCollection();
         $this->posts = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -46,10 +48,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @var Post[]|Collection
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
+     * @var Topic[]|Collection
+     * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="user", cascade={"remove"})
      */
     private $posts;
+
+    /**
+     * @var Post[]|Collection
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", cascade={"remove"})
+     */
+    private $topics;
+
+    /**
+     * @var Comment[]|Collection
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", cascade={"remove"})
+     */
+    private $comments;
 
     public function getId(): ?int
     {
@@ -119,6 +133,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getTopics()
+    {
+        return $this->topics;
+    }
+
+    public function setTopics($topics): self
+    {
+        $this->topics = $topics;
+
+        return $this;
+    }
+
     public function getPosts()
     {
         return $this->posts;
@@ -127,6 +154,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPosts($posts): self
     {
         $this->posts = $posts;
+
+        return $this;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function setComments($comments): self
+    {
+        $this->comments = $comments;
 
         return $this;
     }
