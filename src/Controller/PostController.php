@@ -27,10 +27,11 @@ class PostController extends AbstractController
     /**
      * @Route("/create/{topic_id}", name="post_create")
      */
-    public function create(Request $request, EntityManagerInterface $em, Security $security)
+    public function create(Request $request)
     {
-        $topicRepository = $em->getRepository(Topic::class);
-        $topic = $topicRepository->find($request->get('topic_id'));
+        if (!$topic = $this->entityManager->getRepository(Topic::class)->find($request->get('topic_id'))) {
+            return $this->error();
+        }
 
         $post = new Post();
         $form = $this->createForm(PostFormType::class, $post, [
@@ -44,11 +45,9 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $post->setDate(new \DateTime());
-            $post->setUser($security->getUser());
+            $post->setUser($this->security->getUser());
             $post->setTopic($topic);
-            $em->persist($post);
-            $em->flush();
+            $this->repository->add($post, true);
             $this->addFlash('success', 'Post został utworzony');
             return $this->redirectToRoute('topic_show', ['id' => $topic->getId()]);
         }
@@ -63,13 +62,9 @@ class PostController extends AbstractController
     /**
      * @Route("/edit/{id}", name="post_edit")
      */
-    public function edit(Request $request, EntityManagerInterface $em, Security $security)
+    public function edit(Post $post, Request $request)
     {
-        $repository = $em->getRepository(Post::class);
-        $post = $repository->findOneBy([
-            'id' => $request->get('id', 0),
-            'user' => $security->getUser(),
-        ]);
+        if (!$this->author($post)) {return $this->error();}
 
         $form = $this->createForm(PostFormType::class, $post, [
             'label' => "Edytuj temat",
@@ -79,12 +74,10 @@ class PostController extends AbstractController
         ]);
 
         $this->addButtonToForm($form, "Edytuj temat");
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($post);
-            $em->flush();
+            $this->repository->add($post, true);
             $this->addFlash('success', 'Post został edytowany');
             return $this->redirectToRoute('post_edit', ['id' => $post->getId()]);
         }
@@ -99,25 +92,13 @@ class PostController extends AbstractController
     /**
      * @Route("/delete/{id}", name="post_delete")
      */
-    public function delete(Post $post, EntityManagerInterface $em, Security $security)
+    public function delete(Post $post)
     {
-        $em->remove($post);
-        $em->flush();
+        if (!$this->author($post)) {return $this->error();}
 
-        // $category_id = $request->get('category_id', 0);
-        // $repository = $em->getRepository(Category::class);
-        // $category = $repository->find($category_id);
-
+        $this->repository->remove($post, true);
+        $this->addFlash('success', 'Post został usunięty');
         return $this->redirectToRoute('topic_show', ['id' => $post->getTopic()->getId()]);
-    }
-
-    /**
-     * @Route("/list", name="post_list")
-     */
-    function list() {
-        return $this->render('post/list.html.twig', [
-            'posts' => $this->security->getUser()->getPosts()
-        ]);
     }
 
     /**
@@ -143,5 +124,16 @@ class PostController extends AbstractController
         ]);
 
         return $form;
+    }
+
+    private function author($comment)
+    {
+        return $comment->getUser()->getId() == $this->security->getUser()->getId();
+    }
+
+    private function error()
+    {
+        $this->addFlash('error', 'UPS! Coś poszło nie tak');
+        return $this->redirectToRoute("app_homepage");
     }
 }

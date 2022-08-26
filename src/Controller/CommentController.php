@@ -29,19 +29,12 @@ class CommentController extends AbstractController
      */
     public function create(Request $request)
     {
-        $postRepository = $this->entityManager->getRepository(Post::class);
-
-        if (!$post = $postRepository->find($request->get('post_id'))) {
+        if (!$post = $this->entityManager->getRepository(Post::class)->find($request->get('post_id'))) {
             return $this->error();
         }
 
         $comment = new Comment();
-        $form = $this->createForm(CommentFormType::class, $comment, [
-            'label' => "Tworzenie komentarza",
-            'label_attr' => [
-                'class' => "",
-            ],
-        ]);
+        $form = $this->createForm(CommentFormType::class, $comment);
 
         $this->addButtonToForm($form, "Dodaj komentarz");
         $form->handleRequest($request);
@@ -66,9 +59,7 @@ class CommentController extends AbstractController
      */
     public function edit(Comment $comment, Request $request)
     {
-        if (!$this->author($comment)) {
-            return $this->error();
-        }
+        if (!$this->author($comment)) {return $this->error();}
 
         $form = $this->createForm(CommentFormType::class, $comment);
         $this->addButtonToForm($form, "Edytuj komentarz");
@@ -102,9 +93,7 @@ class CommentController extends AbstractController
      */
     public function delete(Comment $comment, Security $security)
     {
-        if (!$this->author($comment)) {
-            return $this->error();
-        }
+        if (!$this->author($comment)) {return $this->error();}
 
         $this->repository->remove($comment, true);
         $this->addFlash('success', 'Komentarz został usunięty');
