@@ -49,7 +49,7 @@ class TopicController extends AbstractController
             $topic->setDate(new \DateTime());
             $topic->setUser($this->security->getUser());
             $topic->setThread($thread);
-            $this->repository->add($thread, true);
+            $this->repository->add($topic, true);
 
             $this->addFlash('success', 'Temat został utworzony');
             return $this->redirectToRoute('topic_create', ['thread_id' => $thread->getId()]);
@@ -98,8 +98,9 @@ class TopicController extends AbstractController
     public function delete(Topic $topic)
     {
         if (!$this->author($topic)) {return $this->error();}
-        $this->repository->remove($topic, true);
 
+        $this->repository->remove($topic, true);
+        $this->addFlash('success', 'Temat został usunięty');
         return $this->redirectToRoute('thread_show', ['id' => $topic->getThread()->getId()]);
     }
 
