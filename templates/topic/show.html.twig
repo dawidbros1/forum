@@ -36,7 +36,7 @@
 								{% if app.user and app.user.id == post.user.id  %}
 									<span class = "me-auto"></span>
 									<a href = "{{path("post_delete", {id: post.id})}}" class = "pe-2">Usuń</a>
-									<a href="{{ path( 'post_edit', { id: post.id } ) }}" class = "pe-2">Edytuj</a>
+									<a href="{{path("post_edit", { id: post.id } ) }}" class = "pe-2">Edytuj</a>
 									<a href = "{{path("comment_create", {post_id:post.id})}}" class = "">Napisz&nbsp;komentarz</a>
 								{% endif %}
 							</div>
@@ -45,21 +45,19 @@
 								{% for comment in post.comments %}
 								<div class = "comment pt-2 border-top">
 									<div class = "d-flex">
-										<img class = "avatar" src="{{ asset('images/avatar.png') }}"/
+										<img class = "avatar" src="{{ asset('images/avatar.png') }}"/>
 										<div class = "ms-2">
 											<div class = "fw-bold">{{comment.user.email}}</div>
 											<div class = "">{{comment.date|ago}}</div>
 										</div>
 									</div>
 									<div class = "">{{comment.text}}</div>
-									{% if app.user %}
-										{% if app.user.id == comment.user.id %}
+									{% if app.user and app.user.id == comment.user.id %}
 										<div class = "d-flex">
 											<span class = "me-auto"></span>
 											<a class="pe-2" href = "{{path("comment_edit", {id: comment.id})}}">Edytuj</a>
 											<a class="pe-2" href = "{{path("comment_delete", {id: comment.id})}}">Usuń</a>
 										</div>
-										{% endif %}
 									{% endif %}
 								</div>
 								{% endfor %}
