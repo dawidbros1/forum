@@ -79,7 +79,7 @@ class PostController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->repository->add($post, true);
             $this->addFlash('success', 'Post został edytowany');
-            return $this->redirectToRoute('post_edit', ['id' => $post->getId()]);
+            return $this->redirectToRoute('topic_show', ['id' => $post->getTopic()->getId()]);
         }
 
         return $this->render('post/form.html.twig', [

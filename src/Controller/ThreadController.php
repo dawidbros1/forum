@@ -70,7 +70,7 @@ class ThreadController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->repository->add($thread, true);
             $this->addFlash('success', 'Wątek został edytowany');
-            return $this->redirectToRoute('thread_edit', ['id' => $thread->getId()]);
+            return $this->redirectToRoute("app_homepage");
         }
 
         return $this->render('thread/form.html.twig', [

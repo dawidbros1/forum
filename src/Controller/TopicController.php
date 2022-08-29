@@ -35,7 +35,7 @@ class TopicController extends AbstractController
 
         $topic = new Topic();
         $form = $this->createForm(TopicFormType::class, $topic, [
-            'label' => "Dodaj temat",
+            'label' => "Tworzenie tematu",
             'label_attr' => [
                 'class' => "fw-bold text-center fs-3",
             ],
@@ -52,7 +52,7 @@ class TopicController extends AbstractController
             $this->repository->add($topic, true);
 
             $this->addFlash('success', 'Temat został utworzony');
-            return $this->redirectToRoute('topic_create', ['thread_id' => $thread->getId()]);
+            return $this->redirectToRoute('thread_show', ['id' => $thread->getId()]);
         }
 
         return $this->render('topic/form.html.twig', [
@@ -70,7 +70,7 @@ class TopicController extends AbstractController
         if (!$this->author($topic)) {return $this->error();}
 
         $form = $this->createForm(TopicFormType::class, $topic, [
-            'label' => "Edytuj temat",
+            'label' => "Edycja temat",
             'label_attr' => [
                 'class' => "fw-bold text-center fs-3",
             ],
@@ -81,8 +81,8 @@ class TopicController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->repository->add($topic, true);
-            $this->addFlash('success', 'Temat został edytowany');
-            return $this->redirectToRoute('topic_edit', ['id' => $topic->getId()]);
+            $this->addFlash('success', 'Temat został zaktualizowany');
+            return $this->redirectToRoute('thread_show', ['id' => $topic->getThread()->getId()]);
         }
 
         return $this->render('topic/form.html.twig', [

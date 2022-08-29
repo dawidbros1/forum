@@ -25,7 +25,7 @@ class RegistrationController extends AbstractController
                 'class' => "fw-bold text-center fs-3",
             ],
         ]);
-        
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -41,6 +41,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
+            $this->addFlash('success', "Konto zostało założone, możesz się na nie zalogować.");
             return $this->redirectToRoute('app_login');
         }
 
