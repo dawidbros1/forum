@@ -50,3 +50,16 @@ img.avatar{
    width: 100%;
    background-color: rgb(69, 202, 246);
 }
+
+.button{
+   border: 1px solid black;
+   font-weight: bold;
+   color: black;
+   padding: 0px 10px;
+   margin-right: 5px;
+}
+
+.button:hover{
+   color: black;
+   opacity: 0.75;
+}

@@ -26,8 +26,8 @@
                         <div class = "mb-2"> </div>
                         <div class = "position-absolute end-0 bottom-0 me-2 pb-1">
                             <span class = "me-auto"></span>
-                            <a class="pe-2" href = "{{path("thread_edit", {id: thread.id})}}">Edytuj</a>
-                            <a class="pe-2" href = "{{path("thread_delete", {id: thread.id})}}">Usuń</a>
+                            <a class="button bg-danger" href = "{{path("thread_delete", {id: thread.id})}}">Usuń</a>
+                            <a class="button bg-success" href = "{{path("thread_edit", {id: thread.id})}}">Edytuj</a>
                         </div>
                     {% endif %}
                 </div>
