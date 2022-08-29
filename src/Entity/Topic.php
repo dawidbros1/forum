@@ -18,6 +18,7 @@ class Topic
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->setDate(new \DateTime);
     }
 
     /**
@@ -29,11 +30,15 @@ class Topic
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     * @Assert\Length(max=255, maxMessage="Nazwa tematu nie może zawierać więcej niż {{ limit }} znaków")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=4096)
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     * @Assert\Length(max=4096, maxMessage="Treść tematu nie może zawierać więcej niż {{ limit }} znaków")
      */
     private $text;
 

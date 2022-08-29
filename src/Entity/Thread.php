@@ -34,11 +34,15 @@ class Thread
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     * @Assert\Length(max=255, maxMessage="Nazwa wątku nie może zawierać więcej niż {{ limit }} znaków")
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=4096)
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     * @Assert\Length(max=4096, maxMessage="Opis wątka nie może zawierać więcej niż {{ limit }} znaków")
      */
     private $description;
 

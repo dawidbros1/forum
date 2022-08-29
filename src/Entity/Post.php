@@ -48,7 +48,8 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=4096)
-     * @Assert\Length(min=3, max=4096)
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     * @Assert\Length(max=4096, maxMessage="Post nie może zawierać więcej niż {{ limit }} znaków")
      */
     private $text;
 
