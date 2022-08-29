@@ -2,6 +2,8 @@
 
 {% block title %}Strona główna{% endblock %}
 
+{% block breadcrumbs_homepage %} <span>Strona główna</span> {% endblock %}
+
 {% block body %}
 <div id = "homepage_home">
     {% if app.user and is_granted('ROLE_ADMIN') %}
@@ -18,16 +20,16 @@
             {% for thread in threads %}
                 <div class = "item p-3 pt-0 mt-2 position-relative"> 
                     <a class = "d-block" href="{{path("thread_show", {id: thread.id})}}" role="button">
-                        {{ thread.name|capitalize  }} ({{thread.topics|length}})
+                        {{ thread.name  }} ({{thread.topics|length}})
                     </a>
                     <small class = ""> {{thread.description}}</small>
 
                     {% if app.user and is_granted('ROLE_ADMIN') %}
-                        <div class = "mb-2"> </div>
-                        <div class = "position-absolute end-0 bottom-0 me-2 pb-1">
+                        <div class = "mb-3"> </div>
+                        <div class = "position-absolute end-0 bottom-0 pb-1">
                             <span class = "me-auto"></span>
-                            <a class="button bg-danger" href = "{{path("thread_delete", {id: thread.id})}}">Usuń</a>
-                            <a class="button bg-success" href = "{{path("thread_edit", {id: thread.id})}}">Edytuj</a>
+                            <a class="button button-edit" href = "{{path("thread_edit", {id: thread.id})}}">Edytuj</a>
+                            <a class="button button-delete" href = "{{path("thread_delete", {id: thread.id})}}">Usuń</a>  
                         </div>
                     {% endif %}
                 </div>

@@ -50,7 +50,7 @@ class CommentController extends AbstractController
         return $this->render('comment/form.html.twig', [
             'form' => $form->createView(),
             'post' => $post,
-            'title' => "Dodaj komentarz",
+            'title' => "Tworzenie komentarza",
         ]);
     }
 
@@ -74,7 +74,7 @@ class CommentController extends AbstractController
         return $this->render('comment/form.html.twig', [
             'form' => $form->createView(),
             'post' => $comment->getPost(),
-            'title' => "Edytuj komentarz",
+            'title' => "Edycja komentarza",
         ]);
     }
 

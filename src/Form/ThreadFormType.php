@@ -20,6 +20,9 @@ class ThreadFormType extends AbstractType
             ])
             ->add('name', TextType::class, [
                 'label' => "Nazwa wątka",
+                'label_attr' => [
+                    'class' => "fw-bold",
+                ],
                 'attr' => [
                     'placeholder' => "Wprowadź nazwę wątka",
                     "rows" => 6,
@@ -27,6 +30,9 @@ class ThreadFormType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => "Opis wątka",
+                'label_attr' => [
+                    'class' => "fw-bold",
+                ],
                 'attr' => [
                     'placeholder' => "Wprowadź opis wątka",
                     "rows" => 6,

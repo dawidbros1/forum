@@ -28,9 +28,11 @@ class ThreadController extends AbstractController
      */
     public function create(Request $request)
     {
+        $title = "Tworzenie wątka";
+
         $thread = new Thread();
         $form = $this->createForm(ThreadFormType::class, $thread, [
-            'label' => "Dodaj wątekk",
+            'label' => $title,
             'label_attr' => [
                 'class' => "fw-bold text-center fs-3",
             ],
@@ -47,7 +49,7 @@ class ThreadController extends AbstractController
         }
 
         return $this->render('thread/form.html.twig', [
-            'title' => "Dodaj wątek",
+            'title' => $title,
             'form' => $form->createView(),
         ]);
     }
@@ -57,8 +59,10 @@ class ThreadController extends AbstractController
      */
     public function edit(Thread $thread, Request $request)
     {
+        $title = "Edycja wątka";
+
         $form = $this->createForm(ThreadFormType::class, $thread, [
-            'label' => "Edytuj temat",
+            'label' => $title,
             'label_attr' => [
                 'class' => "fw-bold text-center fs-3",
             ],
@@ -74,7 +78,7 @@ class ThreadController extends AbstractController
         }
 
         return $this->render('thread/form.html.twig', [
-            'title' => "Edytuj wątek",
+            'title' => $title,
             'form' => $form->createView(),
         ]);
     }

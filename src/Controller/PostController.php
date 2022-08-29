@@ -29,13 +29,15 @@ class PostController extends AbstractController
      */
     public function create(Request $request)
     {
+        $title = "Tworzenie posta";
+
         if (!$topic = $this->entityManager->getRepository(Topic::class)->find($request->get('topic_id'))) {
             return $this->error();
         }
 
         $post = new Post();
         $form = $this->createForm(PostFormType::class, $post, [
-            'label' => "Tworzenie posta",
+            'label' => $title,
             'label_attr' => [
                 'class' => "fw-bold text-center fs-3",
             ],
@@ -53,7 +55,7 @@ class PostController extends AbstractController
         }
 
         return $this->render('post/form.html.twig', [
-            'title' => "Tworzenie posta",
+            'title' => $title,
             'form' => $form->createView(),
             'topic' => $topic,
         ]);
@@ -64,10 +66,12 @@ class PostController extends AbstractController
      */
     public function edit(Post $post, Request $request)
     {
+        $title = "Edycja posta";
+
         if (!$this->author($post)) {return $this->error();}
 
         $form = $this->createForm(PostFormType::class, $post, [
-            'label' => "Edytuj temat",
+            'label' => $title,
             'label_attr' => [
                 'class' => "fw-bold text-center fs-3",
             ],
@@ -83,7 +87,7 @@ class PostController extends AbstractController
         }
 
         return $this->render('post/form.html.twig', [
-            'title' => "Educja posta",
+            'title' => $title,
             'form' => $form->createView(),
             'topic' => $post->getTopic(),
         ]);

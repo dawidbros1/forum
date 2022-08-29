@@ -21,7 +21,7 @@ class CommentFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => "Wprowadź treść komentarza",
-                    "rows" => 3,
+                    "rows" => 6,
                 ],
             ])
         ;

@@ -4,6 +4,7 @@
 
 {% block breadcrumbs %}
 	&rarr; <a href = "{{path("thread_show", {id: thread.id})}}"> {{ thread.name }}</a>
+  &rarr; <span>{{title}}</span>
 {% endblock %}
 
 {% block body %}

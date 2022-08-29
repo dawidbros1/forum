@@ -2,7 +2,7 @@
 
 {% block breadcrumbs %}
 	&rarr; <a href = "{{path("thread_show", {id: topic.thread.id})}}"> {{ topic.thread.name }}</a>
-	&rarr; <a href = "#"> {{ topic.title }}</a>
+	&rarr; <span> {{ topic.title }}</span>
 {% endblock %}
 
 {% block body %}
@@ -10,7 +10,7 @@
 		<div class="banner text-center py-2 ps-2 text-white">{{topic.title}}</div>
 
 		<div id = "topic" class = "p-2 position-relative">
-			<div class="date text-end fw-bold pe-2">{{topic.date|date("d F Y H:i:s")}}</div>
+			<div class="date text-end fw-bold pe-2">{{topic.date|date("d F Y, H:i:s")}}</div>
 			<div class = "pb-2">{{topic.text}}</div>
 			<div class = "d-flex">
 				<div class="author w-100"><span class = "fw-bold">Author:</span> {{topic.user.email}}</div>
@@ -28,22 +28,22 @@
 							<img class="avatar center d-block p-2" src="{{ asset('images/avatar.png') }}"/>
 						</div>
 
-						<div class = "col-10 col-sm-11 p-3 pb-1">
+						<div class = "col-10 col-sm-11 p-2 pb-1">
 							<div><span class = "fw-bold">{{post.user.email}}</span>, {{post.date|ago}}</div>
 							<div>{{post.text}}</div>
 
-							<div class = "d-flex py-1 px-2">
+							<div class = "d-flex py-1">
 								{% if app.user and app.user.id == post.user.id  %}
 									<span class = "me-auto"></span>
-									<a href = "{{path("post_delete", {id: post.id})}}" class = "button bg-danger">Usuń</a>
-									<a href="{{path("post_edit", { id: post.id } ) }}" class = "button bg-success">Edytuj</a>
-									<a href = "{{path("comment_create", {post_id:post.id})}}" class = "button bg-primary">Napisz&nbsp;komentarz</a>
+									<a href="{{path("comment_create", {post_id:post.id})}}" class = "button button-create">Napisz&nbsp;komentarz</a>
+									<a href="{{path("post_edit", { id: post.id } ) }}" class = "button button-edit">Edytuj</a>
+									<a href="{{path("post_delete", {id: post.id})}}" class = "button button-delete">Usuń</a>
 								{% endif %}
 							</div>
 							{% if post.comments is empty %}
 							{% else %}
 								{% for comment in post.comments %}
-								<div class = "comment pt-2 px-2 border-top">
+								<div class = "comment pt-2 px-2 pb-4 mb-2 border-top position-relative">
 									<div class = "d-flex">
 										<img class = "avatar" src="{{ asset('images/avatar.png') }}"/>
 										<div class = "ms-2">
@@ -53,10 +53,11 @@
 									</div>
 									<div class = "">{{comment.text}}</div>
 									{% if app.user and app.user.id == comment.user.id %}
-										<div class = "d-flex">
+										<div class = "pb-1"></div>
+										<div class = "position-absolute end-0 bottom-0">
 											<span class = "me-auto"></span>
-											<a class="button bg-danger" href = "{{path("comment_delete", {id: comment.id})}}">Usuń</a>
-											<a class="button bg-success" href = "{{path("comment_edit", {id: comment.id})}}">Edytuj</a>
+											<a class="button button-edit" href = "{{path("comment_edit", {id: comment.id})}}">Edytuj</a>
+											<a class="button button-delete" href = "{{path("comment_delete", {id: comment.id})}}">Usuń</a>
 										</div>
 									{% endif %}
 								</div>

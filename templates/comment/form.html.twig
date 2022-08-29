@@ -5,6 +5,7 @@
 {% block breadcrumbs %}
     &rarr; <a href = "{{path("thread_show", {id: post.topic.thread.id})}}">{{post.topic.thread.name}} </a> 
     &rarr; <a href = "{{path("topic_show", {id: post.topic.id})}}">{{post.topic.title}} </a> 
+    &rarr; <span> {{ title }}</span>
 {% endblock %}
 
 {% block body %}

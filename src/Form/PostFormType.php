@@ -21,7 +21,7 @@ class PostFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => "Wprowadź treść posta",
-                    "rows" => 6,
+                    "rows" => 9,
                 ],
             ])
         ;

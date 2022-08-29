@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block breadcrumbs %}
-	&rarr; <a href = "#"> {{ thread.name }}</a>
+	&rarr; <span> {{ thread.name }}</span>
 {% endblock %}
 
 {% block body %}
@@ -26,17 +26,17 @@
 								<img class="avatar center d-block p-2" src="{{ asset('images/avatar.png') }}"/>
 							</div>
 
-							<div class = "col-10 col-sm-11 p-3">
+							<div class = "col-10 col-sm-11 p-3 position-relative">
 								<a class=" d-block" href="{{path("topic_show", {id: topic.id})}}" role="button">
 									{{ topic.title }} ({{topic.posts|length}})
 								</a>
 								<div>{{topic.user.email}}, {{topic.date|ago}}</div>
 
 								{% if app.user and app.user.id == topic.user.id %}
-									<div class = "d-flex">
+									<div class = "position-absolute end-0 bottom-0 mb-2">
 										<span class = "me-auto"></span>
-										<a class="button bg-danger" href = "{{path("topic_delete", {id: topic.id})}}">Usuń</a>
-										<a class="button bg-success" href = "{{path("topic_edit", {id: topic.id})}}">Edytuj</a>
+										<a class="button button-edit" href = "{{path("topic_edit", {id: topic.id})}}">Edytuj</a>
+										<a class="button button-delete" href = "{{path("topic_delete", {id: topic.id})}}">Usuń</a>
 									</div>
 								{% endif %}
 							</div>

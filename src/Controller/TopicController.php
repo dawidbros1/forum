@@ -29,13 +29,15 @@ class TopicController extends AbstractController
      */
     public function create(Request $request)
     {
+        $title = "Tworzenie tematu";
+
         if (!$thread = $this->entityManager->getRepository(Thread::class)->find($request->get('thread_id'))) {
             return $this->error();
         }
 
         $topic = new Topic();
         $form = $this->createForm(TopicFormType::class, $topic, [
-            'label' => "Tworzenie tematu",
+            'label' => $title,
             'label_attr' => [
                 'class' => "fw-bold text-center fs-3",
             ],
@@ -56,7 +58,7 @@ class TopicController extends AbstractController
         }
 
         return $this->render('topic/form.html.twig', [
-            'title' => "Dodaj temat",
+            'title' => $title,
             'form' => $form->createView(),
             'thread' => $thread,
         ]);
@@ -67,10 +69,12 @@ class TopicController extends AbstractController
      */
     public function edit(Topic $topic, Request $request)
     {
+        $title = "Edycja tematu";
+
         if (!$this->author($topic)) {return $this->error();}
 
         $form = $this->createForm(TopicFormType::class, $topic, [
-            'label' => "Edycja temat",
+            'label' => $title,
             'label_attr' => [
                 'class' => "fw-bold text-center fs-3",
             ],
@@ -86,7 +90,7 @@ class TopicController extends AbstractController
         }
 
         return $this->render('topic/form.html.twig', [
-            'title' => "Edytuj temat",
+            'title' => $title,
             'form' => $form->createView(),
             'thread' => $topic->getThread(),
         ]);
