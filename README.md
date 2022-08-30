@@ -8,8 +8,8 @@ It is a simple forum enabling creates threads for admin and topic, posts and com
 
 ## Features
 1. Management of threads for admin
-2. Management of topics, posts and comments
-3. 
+2. Management of topics, posts and comments for users
+3. Commands to generate content
 
 ## Installation Instructions
 1. Run `git clone https://github.com/dawidbros1/symfony-forum.git` and next `cd symfony-forum`
