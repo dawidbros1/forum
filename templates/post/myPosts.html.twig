@@ -2,6 +2,10 @@
 
 {% block title %}Moje posty{% endblock %}      
 
+{% block breadcrumbs %}
+	&rarr;<span> Moje posty</span>
+{% endblock %}
+
 {% block body %}
 <div id="myTopics">
    <div class="banner py-2 ps-2 text-white">Moje posty</div>
@@ -9,15 +13,17 @@
          <div class = "text-center fw-bold">Tu jeszcze nic nie ma</div>
    {% else %}
          {% for post in posts %}
-            <div class = "post mt-2">
+            <div class = "item py-2">
                <div class = "d-flex">
                   <img class = "avatar" src="{{ asset('images/avatar.png') }}"/>
                   <div class = "ms-2">
                      <a class = "fw-bold" href="{{path("thread_show", {id: post.topic.thread.id})}}">{{post.topic.thread.name}}</a> &rarr; 
 							<a class = "fw-bold" href="{{path("topic_show", {id: post.topic.id})}}">{{post.topic.title}}</a>
-                     <div class = "">{{post.date|date("d/m/Y H:i:s")}}</div>
+                     <div class = "">{{post.date|date("d F Y, H:i:s")}}</div>
                   </div>
                </div>
+
+               <div class = "">{{post.text}}</div>
             </div>
          {% endfor %}
    {% endif %}

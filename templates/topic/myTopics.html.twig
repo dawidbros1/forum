@@ -2,6 +2,12 @@
 
 {% block title %}Moje tematy{% endblock %}      
 
+
+{% block breadcrumbs %}
+	&rarr;<span> Moje tematy</span>
+{% endblock %}
+
+
 {% block body %}
 <div id="myTopics">
    <div class="banner py-2 ps-2 text-white">Moje tematy</div>
@@ -9,15 +15,17 @@
          <div class = "text-center fw-bold">Tu jeszcze nic nie ma</div>
    {% else %}
          {% for topic in topics %}
-            <div class = "topic mt-2">
+            <div class = "item py-2">
                <div class = "d-flex">
                   <img class = "avatar" src="{{ asset('images/avatar.png') }}"/>
                   <div class = "ms-2">
                      <a class = "fw-bold" href="{{path("thread_show", {id: topic.thread.id})}}">{{topic.thread.name}}</a> &rarr; 
-                     <span class = "fw-bold">{{topic.title}}</span>
-                     <div class = "">{{topic.date|date("d/m/Y H:i:s")}}</div>
+                     <a href = "{{path("topic_show", {id: topic.id})}}" class = "fw-bold">{{topic.title}}</a>
+                     <div class = "">{{topic.date|date("d F Y, H:i:s")}}</div>
                   </div>
                </div>
+
+               <div class = "">{{topic.text}}</div>
             </div>
          {% endfor %}
    {% endif %}

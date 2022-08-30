@@ -2,6 +2,10 @@
 
 {% block title %}Moje komentarze{% endblock %}      
 
+{% block breadcrumbs %}
+	&rarr;<span> Moje komentarze</span>
+{% endblock %}
+
 {% block body %}
 <div id="comments">
    <div class="banner py-2 ps-2 text-white">Moje komentarze</div>
@@ -9,14 +13,20 @@
          <div class = "text-center fw-bold">Tu jeszcze nic nie ma</div>
    {% else %}
          {% for comment in comments %}
-            <div class = "comment mt-2">
+            <div class = "item py-2">
                <div class = "d-flex">
                   <img class = "avatar" src="{{ asset('images/avatar.png') }}"/>
                   <div class = "ms-2">
                       <a class = "fw-bold" href = {{path("thread_show", {id: comment.post.topic.thread.id})}}>{{comment.post.topic.thread.name}}</a> &rarr; 
                       <a class = "fw-bold" href = {{path("topic_show", {id: comment.post.topic.id})}}>{{comment.post.topic.title}}</a>
-                     <div class = "">{{comment.date|date("d/m/Y H:i:s")}}</div>
+                      {# <span class = "fw-bold" >{{comment.post.user.email}}</span> #}
+                     <div class = "">{{comment.date|date("d F Y, H:i:s")}}</div>
                   </div>
+               </div>
+
+               <div class="my-2 bg-lightgray p-2">
+                  <div class = "fw-bold">Answer to: </div>
+                  <div class = "">{{comment.post.text}}</div>
                </div>
 
                <div class = "">{{comment.text}}</div>
