@@ -77,7 +77,7 @@ class PostController extends AbstractController
             ],
         ]);
 
-        $this->addButtonToForm($form, "Edytuj temat");
+        $this->addButtonToForm($form, "Edytuj posta");
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

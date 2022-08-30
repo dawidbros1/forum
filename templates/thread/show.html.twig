@@ -11,7 +11,7 @@
 				<a href="{{path("topic_create", {thread_id: thread.id})}}" class="position-absolute btn btn-primary px-3 py-1 end-0 top-0">Dodaj temat</a>
 			</div>
 		{% endif %}
-	
+		
 		<div>
 			<div class="banner py-2 ps-2 text-white">
 				{{ thread.name }}
@@ -22,11 +22,11 @@
 				<div class="items">
 					{% for topic in thread.topics %}
 						<div class="bg-light d-flex item">
-							<div class = "col-2 col-sm-1 position-relative">
+							<div class = "col-2 col-sm-1 position-relative ms-1">
 								<img class="avatar center d-block p-2" src="{{ asset('images/avatar.png') }}"/>
 							</div>
 
-							<div class = "col-10 col-sm-11 p-3 position-relative">
+							<div class = "col-10 col-sm-11 p-3 ps-1 position-relative">
 								<a class=" d-block" href="{{path("topic_show", {id: topic.id})}}" role="button">
 									{{ topic.title }} ({{topic.posts|length}})
 								</a>
@@ -35,8 +35,8 @@
 								{% if app.user and app.user.id == topic.user.id %}
 									<div class = "position-absolute end-0 bottom-0 mb-2">
 										<span class = "me-auto"></span>
-										<a class="button button-edit" href = "{{path("topic_edit", {id: topic.id})}}">Edytuj</a>
-										<a class="button button-delete" href = "{{path("topic_delete", {id: topic.id})}}">Usuń</a>
+										<a class="pe-2" href = "{{path("topic_delete", {id: topic.id})}}">Usuń</a>
+										<a class="pe-3" href = "{{path("topic_edit", {id: topic.id})}}">Edytuj</a>
 									</div>
 								{% endif %}
 							</div>

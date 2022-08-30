@@ -28,8 +28,8 @@
                         <div class = "mb-3"> </div>
                         <div class = "position-absolute end-0 bottom-0 pb-1">
                             <span class = "me-auto"></span>
-                            <a class="button button-edit" href = "{{path("thread_edit", {id: thread.id})}}">Edytuj</a>
-                            <a class="button button-delete" href = "{{path("thread_delete", {id: thread.id})}}">Usuń</a>  
+                            <a class="pe-2" href = "{{path("thread_delete", {id: thread.id})}}">Usuń</a>
+                            <a class="pe-3" href = "{{path("thread_edit", {id: thread.id})}}">Edytuj</a>
                         </div>
                     {% endif %}
                 </div>

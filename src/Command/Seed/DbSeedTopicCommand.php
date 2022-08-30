@@ -61,7 +61,7 @@ class DbSeedTopicCommand extends Command
     private function addTopic($flush)
     {
         $topic = new Topic;
-        $topic->setTitle($this->textGenerator->generate(1, 10));
+        $topic->setTitle($this->textGenerator->generate(1, 5));
         $topic->setText($this->textGenerator->generate(5, 20));
         $topic->setUser($this->randomUser());
         $topic->setThread($this->randomThread());

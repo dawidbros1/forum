@@ -38,42 +38,16 @@ img.avatar{
    height: 50px;
 }
 
-#comments .comment, .item{
+.item{
    border-bottom: 1px solid lightgray;
 }
 
-#comments .comment:last-child, .item:last-child{
-   border-bottom: none;
+.item:last-child{
+   border-bottom: none !important;
 }
+
 
 .banner{
    width: 100%;
    background-color: rgb(69, 202, 246);
-}
-
-/* CRUD BUTTONS */
-
-.button{
-   border: 1px solid black;
-   font-weight: bold;
-   color: black;
-   padding: 1px 10px;
-   margin-right: 5px;
-}
-
-.button-delete{
-   background-color: #f46c6c;
-}
-
-.button-edit{
-   background-color:rgb(150, 239, 106);
-}  
-
-.button-create{
-   background-color:rgb(138, 152, 242);
-}
-
-.button:hover{
-   color: black;
-   opacity: 0.75;
 }
