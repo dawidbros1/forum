@@ -14,7 +14,7 @@ It is a simple forum enabling creates threads for admin and topic, posts and com
 ## Installation Instructions
 1. Run `git clone https://github.com/dawidbros1/symfony-forum.git`
 2. Run `composer install`
-3. Configure connection to database in `.env`
+3. Run `rename .env_dist .env` and configure connection to database
 4. Run `php bin/console doctrine:database:create`
 5. Run `php bin/console doctrine:schema:update --force`
 
