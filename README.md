@@ -81,11 +81,11 @@ It is a simple forum enabling creates threads for admin and topic, posts and com
 | GET | /comment/my_list| src/Controller/CommentController@listMyComments | comment_my_list |
 
 ## Commands
-`php bin/console db:seed:user`: The command deletes existing users and creates 2 new users with role user and admin(password: admin123)
-`php bin/console db:seed:thread`: The command deletes existing threads and generates new 4 threads
-`php bin/console db:seed:topic limit`: The command generates topics
-`php bin/console db:seed:post limit`: The command generates posts
-`php bin/console db:seed:comment limit`: The command generates comments
-`php bin/console db:table:clear name_of_entity`: The command remove content of table by entity name
-`php bin/console db:thread:create name description`: The command adds thread
-`php bin/console db:thread:remove name`: The command removes thread
+* `php bin/console db:seed:user`: The command deletes existing users and creates 2 new users(password: admin123).
+* `php bin/console db:seed:thread`: The command deletes existing threads and generates new 4 threads
+* `php bin/console db:seed:topic limit`: The command generates topics
+* `php bin/console db:seed:post limit`: The command generates posts
+* `php bin/console db:seed:comment limit`: The command generates comments
+* `php bin/console db:table:clear name_of_entity`: The command remove content of table by entity name
+* `php bin/console db:thread:create name description`: The command adds thread
+* `php bin/console db:thread:remove name`: The command removes thread
