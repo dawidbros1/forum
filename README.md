@@ -24,6 +24,8 @@ It is a simple forum enabling creates threads for admin and topic, posts and com
 - [Commands](#commands)
 
 ## Screenshots
+<kbd>
+
 <!-- HomePage -->
 ![image not found](readme_img/homepage/homepage.png)
 
@@ -57,6 +59,8 @@ It is a simple forum enabling creates threads for admin and topic, posts and com
 ![image not found](readme_img/post/my_list.png)
 
 ![image not found](readme_img/comment/my_list.png)
+
+</kbd>
 
 ## Routes
 | Method | URI | Action | Name |
