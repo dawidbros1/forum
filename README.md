@@ -1,4 +1,4 @@
-# Symfony Forum
+# Forum
 It is a simple forum enabling creates threads for admin and topic, posts and comments for users.
 
 ## Build with
