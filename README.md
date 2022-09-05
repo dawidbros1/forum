@@ -1,5 +1,5 @@
 # Forum
-It is a simple forum enabling creates threads for admin and topic, posts and comments for users.
+It is a simple web forum where a user with an administrator role can manage the main threads and regular users can add topics, create posts and comment on them.
 
 ## Build with
 1. Symfony 5.4
